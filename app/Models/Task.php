@@ -5,9 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Project extends Model
+class Task extends Model
 {
     use HasFactory;
 
@@ -26,13 +25,8 @@ class Project extends Model
         return $this->belongsTo(User::class, 'owner_id');
     }
 
-    public function assigned_members(): HasMany
+    public function project(): BelongsTo
     {
-        return $this->hasMany(User::class);
-    }
-
-    public function tasks(): HasMany
-    {
-        return $this->hasMany(Task::class);
+        return $this->belongsTo(Project::class, 'project_id');
     }
 }
