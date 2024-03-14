@@ -26,7 +26,7 @@ class Project extends Model
         return $this->belongsTo(User::class, 'owner_id');
     }
 
-    public function assigned_members(): HasMany
+    public function members(): HasMany
     {
         return $this->hasMany(User::class);
     }
