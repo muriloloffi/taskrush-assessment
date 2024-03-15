@@ -9,6 +9,12 @@ use Knuckles\Scribe\Attributes\UrlParam;
 
 class ProjectController extends Controller
 {
+    #[Endpoint('List all projects')]
+    public function index()
+    {
+        return response()->json(Project::all());
+    }
+
     #[Endpoint('Retrieve project')]
     #[UrlParam(name: 'id', type: 'integer', description: 'The ID of the project.', example: 1)]
     public function show(int $id)
