@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -60,5 +61,15 @@ class User extends Authenticatable
     public function tasksOwned(): HasMany
     {
         return $this->hasMany(Task::class);
+    }
+
+    public function workIntervals(): HasMany
+    {
+        return $this->hasMany(WorkInterval::class);
+    }
+
+    public function workIntervalsOnTasks(): HasManyThrough
+    {
+        return $this->hasManyThrough(WorkInterval::class, Task::class);
     }
 }
