@@ -3,11 +3,11 @@
 namespace Database\Factories;
 
 use App\Models\Project;
-use App\Models\User;
+use App\Models\Task;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Task>
+ * @extends Factory<Task>
  */
 class TaskFactory extends Factory
 {
@@ -18,13 +18,17 @@ class TaskFactory extends Factory
      */
     public function definition(): array
     {
-        $project = Project::factory()->create();
-
         return [
             'title' => fake()->text(100),
             'description' => fake()->text(300),
+        ];
+    }
+
+    public function withProject(Project $project): self
+    {
+        return $this->state([
             'project_id' => $project->id,
             'owner_id' => $project->owner->id,
-        ];
+        ]);
     }
 }
