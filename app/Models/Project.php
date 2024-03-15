@@ -28,7 +28,7 @@ class Project extends Model
 
     public function members(): HasMany
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(User::class, 'projects_members');
     }
 
     public function tasks(): HasMany
