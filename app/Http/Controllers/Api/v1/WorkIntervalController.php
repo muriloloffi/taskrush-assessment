@@ -7,17 +7,16 @@ use App\Models\Task;
 use App\Models\User;
 use App\Models\WorkInterval;
 use Illuminate\Http\Request;
+use Knuckles\Scribe\Attributes\BodyParam;
+use Knuckles\Scribe\Attributes\Endpoint;
 
 class WorkIntervalController extends Controller
 {
-
+    #[Endpoint(title: 'New work interval', description: 'Start a new work interval for a given user and task')]
+    #[BodyParam(name: 'user_id', type: 'integer', description: 'The ID of the user.', example: 1)]
+    #[BodyParam(name: 'task_id', type: 'integer', description: 'The ID of the task.', example: 1)]
     public function start(Request $request)
     {
-        // get the authenticated user and the task id from the body of the
-        // request and use them to create a new work interval. If the user owns
-        // any ongoing work interval, it will be stopped before starting a new
-        // one.
-//        $user = auth()->user();
         $user = User::findOrFail($request->only('user_id')['user_id']);
         $task = Task::findOrFail($request->only('task_id')['task_id']);
         WorkInterval::where('user_id', $user->id)
@@ -43,10 +42,10 @@ class WorkIntervalController extends Controller
         );
     }
 
+    #[Endpoint(title: 'Stop work interval', description: 'Stop a new work interval for a given user')]
+    #[BodyParam(name: 'user_id', type: 'integer', description: 'The ID of the user.', example: 1)]
     public function stop()
     {
-        // Get the authenticated user and use it to stop the ongoing work
-        // interval.
         $user = auth()->user();
         /** @var WorkInterval $workInterval */
         $workInterval = WorkInterval::where('user_id', $user->id)
