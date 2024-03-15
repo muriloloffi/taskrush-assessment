@@ -10,3 +10,4 @@ Requirements:
 - php8.2-curl
 - php8.2-sqlite3
 - composer "updated"
+- `php artisan scribe:generate` to generate the API documentation
