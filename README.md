@@ -11,3 +11,7 @@ Requirements:
 - php8.2-sqlite3
 - composer "updated"
 - `php artisan scribe:generate` to generate the API documentation
+
+Extras (optional):
+---
+- 'php artisan ide-helper:eloquent' to generate the Eloquent model helper
