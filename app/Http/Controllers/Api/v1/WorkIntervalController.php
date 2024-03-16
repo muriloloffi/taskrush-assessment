@@ -44,9 +44,9 @@ class WorkIntervalController extends Controller
 
     #[Endpoint(title: 'Stop work interval', description: 'Stop a new work interval for a given user')]
     #[BodyParam(name: 'user_id', type: 'integer', description: 'The ID of the user.', example: 1)]
-    public function stop()
+    public function stop(Request $request)
     {
-        $user = auth()->user();
+        $user = User::findOrFail($request->only('user_id')['user_id']);
         /** @var WorkInterval $workInterval */
         $workInterval = WorkInterval::where('user_id', $user->id)
             ->whereNull('end')
