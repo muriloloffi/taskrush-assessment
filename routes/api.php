@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use App\Http\Controllers\Api\v1\{
     ProjectController,
     WorkIntervalController
@@ -7,8 +8,9 @@ use App\Http\Controllers\Api\v1\{
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
-    return $request->user();
+// WIP: This is a temporary route to test the create Project endpoint
+Route::get('/users', function (Request $request) {
+    return User::all('id', 'name');
 });
 
 Route::get('/projects', [ProjectController::class, 'index']);
