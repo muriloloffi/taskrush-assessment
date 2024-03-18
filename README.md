@@ -36,6 +36,6 @@ Verifique as extensões do PHP (requisitos) instaladas na sua máquina e siga os
 Tendo seguido as instruções de instalação do projeto, uma _collection_ da API pode ser importada para o Postman usando a URI http://127.0.0.1:8000/docs/collection.json
 
 ## Troubleshooting
-- **Front-end retorna erro de cors, visto na aba network:**
-  - Verifique se o front está rodando no mesmo endereço da variável de ambiente `FRONTEND_URL`, no arquivo `.env`.
+- **Front-end retorna erro de cors, na aba network das ferramentas de desenvolvedor:**
+  - Verifique se o front está rodando no mesmo endereço da variável de ambiente `FRONTEND_URL`, no arquivo `.env` do back-end.
 
