@@ -17,15 +17,20 @@ class WorkIntervalController extends Controller
     #[BodyParam(name: 'task_id', type: 'integer', description: 'The ID of the task.', example: 1)]
     public function start(Request $request)
     {
-        $user = User::findOrFail($request->only('user_id')['user_id']);
-        $task = Task::findOrFail($request->only('task_id')['task_id']);
-        WorkInterval::where('user_id', $user->id)
+        $request->validate([
+            'user_id' => 'required|integer|exists:users,id',
+            'task_id' => 'required|integer|exists:tasks,id',
+        ]);
+
+        $validated = $request->only('user_id', 'task_id');
+
+        WorkInterval::where('user_id', $validated['user_id'])
             ->whereNull('end')
             ->update(['end' => now()]);
 
         $startedWorkInterval = WorkInterval::create([
-            'user_id' => $user->id,
-            'task_id' => $task->id,
+            'user_id' => $validated['user_id'],
+            'task_id' => $validated['task_id'],
             'start' => now(),
         ]);
 
@@ -46,9 +51,14 @@ class WorkIntervalController extends Controller
     #[BodyParam(name: 'user_id', type: 'integer', description: 'The ID of the user.', example: 1)]
     public function stop(Request $request)
     {
-        $user = User::findOrFail($request->only('user_id')['user_id']);
+        $request->validate([
+            'user_id' => 'required|integer|exists:users,id',
+        ]);
+
+        $validated = $request->only('user_id');
+
         /** @var WorkInterval $workInterval */
-        $workInterval = WorkInterval::where('user_id', $user->id)
+        $workInterval = WorkInterval::where('user_id', $validated['user_id'])
             ->whereNull('end')
             ->first();
         if (!$workInterval) {
